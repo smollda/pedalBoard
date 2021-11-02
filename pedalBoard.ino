@@ -28,7 +28,7 @@ int osaPravaLeva = 0;
 int stupen = 0; 
 int lastButtonState[11] = {0,0,0,0,0,0,0,0,0,0,0};
 bool modSekvence = false; 
-
+bool zmena = true;
 byte DOUTS[3] = {DOUT1,DOUT2,DOUT3};
 //byte DOUTS[1] = {DOUT1};
 #define CHANNEL_COUNT sizeof(DOUTS)/sizeof(byte)
