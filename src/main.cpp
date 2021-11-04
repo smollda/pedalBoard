@@ -32,19 +32,6 @@ void setup() {
   Joystick.setBrakeRange(-32767, 32767);
 }
 
-void loop() {
-  //Serial.print(HX711read(DOUT3,CLK3));
-  //Serial.print("                 ");
-  Serial.print(HX711read(DOUT2,CLK2));
-  Serial.print("                 ");
-  Serial.println(HX711read(DOUT1,CLK1));
-  //Joystick.setXAxis(constrain(prepocet(440000,720000,HX711read(DOUT3,CLK3)),-32767,32767));  // Brzda
-  delay(5);
-  
-
-}
-
-
 long EEPROMReadlong(long address) {
   long four = EEPROM.read(address);
   long three = EEPROM.read(address + 1);
@@ -119,3 +106,18 @@ long HX711read(int DOUT,int CLK)
   //_lastRead = millis();
   return v.value;
 }
+
+
+void loop() {
+  //Serial.print(HX711read(DOUT3,CLK3));
+  //Serial.print("                 ");
+  Serial.print(HX711read(DOUT2,CLK2));
+  Serial.print("                 ");
+  Serial.println(HX711read(DOUT1,CLK1));
+  //Joystick.setXAxis(constrain(prepocet(440000,720000,HX711read(DOUT3,CLK3)),-32767,32767));  // Brzda
+  delay(5);
+  
+
+}
+
+

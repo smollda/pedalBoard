@@ -10,9 +10,10 @@
             "includePath": [
                 "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/include",
                 "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/src",
+                "C:/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/.pio/libdeps/micro/Joystick/src",
                 "C:/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/.platformio/packages/framework-arduino-avr/variants/micro",
-                "C:/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "C:/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "C:/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
@@ -24,9 +25,10 @@
                 "path": [
                     "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/include",
                     "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/src",
+                    "C:/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
+                    "C:/Users/Smola/Documents/PlatformIO/Projects/pedalBoard/.pio/libdeps/micro/Joystick/src",
                     "C:/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/.platformio/packages/framework-arduino-avr/variants/micro",
-                    "C:/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "C:/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "C:/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "C:/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
