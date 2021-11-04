@@ -30,6 +30,7 @@ char recievedChar;
 bool is_ready = false; 
 bool debug = false;
 bool debugTime = false;
+bool eepromVypis = false;
 long programZacatek = 0;
 long program = 0;
   
@@ -145,7 +146,7 @@ void loop() {
   programZacatek = millis();
   pedal1 = HX711read(DOUT1,CLK1);
   pedal2 = HX711read(DOUT2,CLK2);
-  //pedal3 = HX711read(DOUT3,CLK1);
+  pedal3 = HX711read(DOUT3,CLK3);
   //Serial.println(cekani);
   Joystick.setXAxis(constrain(prepocet(pedal1min,pedal1max,pedal1),-32767,32767));
   Joystick.setYAxis(constrain(prepocet(pedal2min,pedal2max,pedal2),-32767,32767));
@@ -169,6 +170,10 @@ void loop() {
     }
     if (recievedChar == 't'){
       debugTime = !debugTime;
+      recievedChar = " ";
+    }
+    if (recievedChar == 'e'){
+      eepromVypis = !eepromVypis;
       recievedChar = " ";
     }
   }
@@ -246,7 +251,22 @@ void loop() {
     program = 0;
     debugTime = false;
   }
-
+  //Print values stored in the Eeprom
+  if(eepromVypis){
+    Serial.print("Pedal 1 min:");
+    Serial.println(pedal1min);
+    Serial.print("Pedal 1 max:");
+    Serial.println(pedal1max);
+    Serial.print("Pedal 2 min:");
+    Serial.println(pedal2min);
+    Serial.print("Pedal 2 max:");
+    Serial.println(pedal2max);
+    Serial.print("Pedal 3 min:");
+    Serial.println(pedal3min);
+    Serial.print("Pedal 3 max:");
+    Serial.println(pedal3max);
+    eepromVypis = false;
+  }
 }
 
 
