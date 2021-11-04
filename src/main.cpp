@@ -28,8 +28,10 @@ bool kalibrace = false;
 bool kalibraceStart = false;
 char recievedChar;
 bool is_ready = false; 
-long cekaniZacatek = 0;
-long cekani = 0;
+bool debug = false;
+bool debugTime = false;
+long programZacatek = 0;
+long program = 0;
   
 long EEPROMReadlong(long address) {
   long four = EEPROM.read(address);
@@ -140,6 +142,7 @@ void setup() {
 
 
 void loop() {
+  programZacatek = millis();
   pedal1 = HX711read(DOUT1,CLK1);
   pedal2 = HX711read(DOUT2,CLK2);
   //pedal3 = HX711read(DOUT3,CLK1);
@@ -160,6 +163,21 @@ void loop() {
       Serial.println("Kalibrace:");
       recievedChar = " ";
     }
+    if (recievedChar == 'd'){
+      debug = !debug;
+      recievedChar = " ";
+    }
+    if (recievedChar == 't'){
+      debugTime = !debugTime;
+      recievedChar = " ";
+    }
+  }
+  if(debug){
+    Serial.print(pedal1);
+    Serial.print("          ");
+    Serial.print(pedal2);
+    Serial.print("          ");
+    Serial.println(pedal3);
   }
   //Start kalibrace
   if (kalibraceStart)
@@ -217,6 +235,16 @@ void loop() {
     Serial.print(pedal3max);
     Serial.print(" Ručka:");
     Serial.println(ruckaMax);
+  }
+  if((millis()-programZacatek)>program){
+    program = millis()-programZacatek;
+  }
+  //Print program period
+  if(debugTime){
+    Serial.print("Longest program period:");
+    Serial.println(program);
+    program = 0;
+    debugTime = false;
   }
 
 }
