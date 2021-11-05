@@ -23,7 +23,8 @@ long ruckaMax = 0;
 long pedal1 = 0;
 long pedal2 = 0;
 long pedal3 = 0;
-long kalibraceZacatek;
+long pedal1M = 0;
+unsigned long kalibraceZacatek;
 bool kalibrace = false;
 bool kalibraceStart = false;
 char recievedChar;
@@ -31,8 +32,9 @@ bool is_ready = false;
 bool debug = false;
 bool debugTime = false;
 bool eepromVypis = false;
-long programZacatek = 0;
-long program = 0;
+int pocetChyb = 0;
+unsigned long programZacatek = 0;
+unsigned long program = 0;
   
 long EEPROMReadlong(long address) {
   long four = EEPROM.read(address);
@@ -147,6 +149,16 @@ void loop() {
   pedal1 = HX711read(DOUT1,CLK1);
   pedal2 = HX711read(DOUT2,CLK2);
   pedal3 = HX711read(DOUT3,CLK3);
+  if(pedal1M == 0){
+    pedal1M = pedal1;
+  }
+  if((pedal1 - pedal1M)>(pedal1max-pedal1min)||(pedal1M - pedal1)>(pedal1max-pedal1min)){
+    Serial.print("Pedal 1 fault! Previous value:");
+    Serial.print(pedal1M);
+    Serial.print("  new value:");
+    Serial.println(pedal1);
+    pocetChyb++;
+  }
   //Serial.println(cekani);
   Joystick.setXAxis(constrain(prepocet(pedal1min,pedal1max,pedal1),-32767,32767));
   Joystick.setYAxis(constrain(prepocet(pedal2min,pedal2max,pedal2),-32767,32767));
@@ -162,20 +174,25 @@ void loop() {
       kalibraceStart = true;
       kalibraceZacatek = millis();
       Serial.println("Kalibrace:");
-      recievedChar = " ";
+      recievedChar = ' ';
     }
     if (recievedChar == 'd'){
       debug = !debug;
-      recievedChar = " ";
+      recievedChar = ' ';
     }
     if (recievedChar == 't'){
       debugTime = !debugTime;
-      recievedChar = " ";
+      recievedChar = ' ';
     }
     if (recievedChar == 'e'){
       eepromVypis = !eepromVypis;
-      recievedChar = " ";
+      recievedChar = ' ';
     }
+    if (recievedChar == 'c'){
+      Serial.print("Faults:  ");
+      Serial.println(pocetChyb);
+    }
+
   }
   if(debug){
     Serial.print(pedal1);
@@ -267,6 +284,8 @@ void loop() {
     Serial.println(pedal3max);
     eepromVypis = false;
   }
+  pedal1M = pedal1;
+  delay(5);
 }
 
 
