@@ -24,6 +24,8 @@ long pedal1 = 0;
 long pedal2 = 0;
 long pedal3 = 0;
 long pedal1M = 0;
+long pedal2M = 0;
+long pedal3M = 0;
 unsigned long kalibraceZacatek;
 bool kalibrace = false;
 bool kalibraceStart = false;
@@ -65,8 +67,7 @@ long prepocet (long pedalMin, long pedalMax, long hodnota){
   else {
     long offset = pedalMin + 32767;
     return (hodnota-offset);
-  }
-  
+  } 
 }
 
 long HX711read(int DOUT,int CLK) 
@@ -78,7 +79,6 @@ long HX711read(int DOUT,int CLK)
     long value = 0;
     uint8_t data[4];
   } v;
-
   noInterrupts();
 
   // Pulse the clock pin 24 times to read the data.
@@ -112,8 +112,8 @@ void setup() {
   pinMode(CLK1, OUTPUT); 
   pinMode(CLK2, OUTPUT); 
   pinMode(CLK3, OUTPUT); 
-  pinMode(DOUT1, INPUT);
-  pinMode(DOUT2, INPUT);
+  pinMode(DOUT1, INPUT_PULLUP);
+  pinMode(DOUT2, INPUT_PULLUP);
   pinMode(DOUT3, INPUT); 
   digitalWrite(CLK1, LOW);
   digitalWrite(CLK2, LOW);
@@ -146,8 +146,11 @@ void setup() {
 
 void loop() {
   programZacatek = millis();
+  
   pedal1 = HX711read(DOUT1,CLK1);
+  
   pedal2 = HX711read(DOUT2,CLK2);
+  
   pedal3 = HX711read(DOUT3,CLK3);
   if(pedal1M == 0){
     pedal1M = pedal1;
@@ -157,6 +160,20 @@ void loop() {
     Serial.print(pedal1M);
     Serial.print("  new value:");
     Serial.println(pedal1);
+    pocetChyb++;
+  }
+  if((pedal2 - pedal2M)>(pedal2max-pedal2min)||(pedal2M - pedal2)>(pedal2max-pedal2min)){
+    Serial.print("Pedal 2 fault! Previous value:");
+    Serial.print(pedal2M);
+    Serial.print("  new value:");
+    Serial.println(pedal2);
+    pocetChyb++;
+  }
+  if((pedal3 - pedal3M)>(pedal3max-pedal3min)||(pedal3M - pedal3)>(pedal3max-pedal3min)){
+    Serial.print("Pedal 3 fault! Previous value:");
+    Serial.print(pedal3M);
+    Serial.print("  new value:");
+    Serial.println(pedal3);
     pocetChyb++;
   }
   //Serial.println(cekani);
@@ -285,7 +302,9 @@ void loop() {
     eepromVypis = false;
   }
   pedal1M = pedal1;
-  delay(5);
+  pedal2M = pedal2;
+  pedal3M = pedal3;
+  
 }
 
 
