@@ -155,25 +155,31 @@ void loop() {
   if(pedal1M == 0){
     pedal1M = pedal1;
   }
+  if(pedal2M == 0){
+    pedal2M = pedal2;
+  }
+  if(pedal3M == 0){
+    pedal3M = pedal3;
+  }
   if((pedal1 - pedal1M)>(pedal1max-pedal1min)||(pedal1M - pedal1)>(pedal1max-pedal1min)){
-    Serial.print("Pedal 1 fault! Previous value:");
-    Serial.print(pedal1M);
-    Serial.print("  new value:");
-    Serial.println(pedal1);
+    //Serial.print("Pedal 1 fault! Previous value:");
+    //Serial.print(pedal1M);
+    //Serial.print("  new value:");
+    //Serial.println(pedal1);
     pocetChyb++;
   }
   if((pedal2 - pedal2M)>(pedal2max-pedal2min)||(pedal2M - pedal2)>(pedal2max-pedal2min)){
-    Serial.print("Pedal 2 fault! Previous value:");
-    Serial.print(pedal2M);
-    Serial.print("  new value:");
-    Serial.println(pedal2);
+    //Serial.print("Pedal 2 fault! Previous value:");
+    //Serial.print(pedal2M);
+    //Serial.print("  new value:");
+    //Serial.println(pedal2);
     pocetChyb++;
   }
   if((pedal3 - pedal3M)>(pedal3max-pedal3min)||(pedal3M - pedal3)>(pedal3max-pedal3min)){
-    Serial.print("Pedal 3 fault! Previous value:");
-    Serial.print(pedal3M);
-    Serial.print("  new value:");
-    Serial.println(pedal3);
+    //Serial.print("Pedal 3 fault! Previous value:");
+    //Serial.print(pedal3M);
+    //Serial.print("  new value:");
+    //Serial.println(pedal3);
     pocetChyb++;
   }
   //Serial.println(cekani);
@@ -229,16 +235,14 @@ void loop() {
     pedal2max = 0;
     pedal3max = 0;
     ruckaMax = 0;
-    Serial.println("Start kalibrace");
-    Serial.print("Minimální hodnoty: Pedál 1:");
+    Serial.println("Calibration start");
+    Serial.print("Minimum values - pedal 1:");
     Serial.print(pedal1min);
-    Serial.print(" Pedál 2:");
+    Serial.print(" Pedal 2:");
     Serial.print(pedal2min);
-    Serial.print(" Pedál 3:");
-    Serial.print(pedal3min);
-    Serial.print(" Ručka:");
-    Serial.println(ruckaMin);
-    Serial.println("Sešlápni opakovaně všechny 3 pedály + ručku na doraz do 10 sekund (brzdu dle libosti)");
+    Serial.print(" Pedal 3:");
+    Serial.println(pedal3min);
+    Serial.println("Press all 3 pedals to the max (brake pedal as much as you want) during the next 10 seconds");
     kalibraceStart = false;
   }
   if(kalibrace){
@@ -265,7 +269,7 @@ void loop() {
     EEPROMWritelong(20,pedal3max);
     EEPROMWritelong(24,ruckaMin);
     EEPROMWritelong(28,ruckaMax);
-    Serial.println("Konec kalibrace!");
+    Serial.println("Calibration done!");
     Serial.print("Maximální hodnoty: Pedál 1:");
     Serial.print(pedal1max);
     Serial.print(" Pedál 2:");
